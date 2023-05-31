@@ -28,7 +28,9 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
     console.log("uploadFile to", url);
 
     // Get the presigned URL
+    const authorization_token = localStorage.getItem("authorization_token");
     const response = await axios({
+      headers: { Authorization: `Basic ${authorization_token}` },
       method: "GET",
       url,
       params: {
@@ -46,11 +48,11 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
   };
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant='h6' gutterBottom>
         {title}
       </Typography>
       {!file ? (
-        <input type="file" onChange={onFileChange} />
+        <input type='file' onChange={onFileChange} />
       ) : (
         <div>
           <button onClick={removeFile}>Remove file</button>
